@@ -5,8 +5,10 @@
 # DeepSpeed Team
 OUTPUT=$1
 ZERO_STAGE=$2
+MODEL_PATH=$3
+DATA_PATH=local/xjsonfile/V1_parallel
 if [ "$OUTPUT" == "" ]; then
-    OUTPUT=/cpfs/user/chennuo/CN/output/deepspeed/xmath/output_step1_llama_33b_V1_Cross2e-5_bf16
+    OUTPUT=./OUTPUT
 fi
 if [ "$ZERO_STAGE" == "" ]; then
     ZERO_STAGE=3
@@ -14,9 +16,9 @@ fi
 mkdir -p $OUTPUT
 
 deepspeed --include localhost:0,1,2,3,4,5,6,7 --master_port=29500 main.py  \
-   --data_path local/xjsonfile/V1_Cross \
+   --data_path $DATA_PATH \
    --data_split 10,0,0 \
-   --model_name_or_path /cpfs/shared/nlp/llama-30b \
+   --model_name_or_path $MODEL_PATH \
    --per_device_train_batch_size 2 \
    --per_device_eval_batch_size 2 \
    --max_seq_len 512 \
