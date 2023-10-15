@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # local/xjsonfile/rftV2
 # DeepSpeed Team
-OUTPUT=$1
+OUTPUT=/cpfs/user/chennuo/CN/output/test
 ZERO_STAGE=$2
-MODEL_PATH=$3
-DATA_PATH=local/xjsonfile/V1_parallel
+MODEL_PATH=/cpfs/shared/nlp/llama2/llama-2-7b-hf
+DATA_PATH=MathOctopus
 if [ "$OUTPUT" == "" ]; then
     OUTPUT=./OUTPUT
 fi
@@ -15,8 +15,8 @@ if [ "$ZERO_STAGE" == "" ]; then
 fi
 mkdir -p $OUTPUT
 
-deepspeed --include localhost:4,5,6,7 --master_port=29500 main.py  \
-   --data_path DATA_PATH \
+deepspeed --include localhost:0,1,2,3 --master_port=29500 main.py  \
+   --data_path $DATA_PATH \
    --data_split 10,0,0 \
    --model_name_or_path $MODEL_PATH \
    --per_device_train_batch_size 8 \

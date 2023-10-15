@@ -398,53 +398,118 @@ class LocalJsonFileDataset(PromptRawDataset):
 
 
 # for multilingual training
-class XLocalJsonFileDataset(PromptRawDataset):
+# class XLocalJsonFileDataset(PromptRawDataset):
 
-    def __init__(self, output_path, seed, local_rank, dataset_name, chat_path, version):
+#     def __init__(self, output_path, seed, local_rank, dataset_name, chat_path, version):
+#         super().__init__(output_path, seed, local_rank, dataset_name)
+#         self.dataset_name = "local/jsonfile"
+#         self.dataset_name_clean = "jsonfile"
+#         if 'V1' in version:
+#             if 'cross' in version.lower():
+#                 if 'regular' in version:
+#                     train_path = chat_path + '/data/translates/translate_mixV1_crosslang_regular.json'
+#                     # eval_path = chat_path + '/data/eval_ins.json'
+#                 else:
+#                     train_path = chat_path + '/data/translates/translate_mixV1_crosslang.json'
+#                     # eval_path = chat_path + '/data/eval_ins.json'      
+#             elif 'regular' in version:
+#                 train_path = chat_path + '/data/translates/translate_mixV1_regular.json'
+#                 # eval_path = chat_path + '/data/eval_ins.json'
+#             elif 'parallel' in version.lower():
+#                 train_path = chat_path + '/data/translates/translate_mixV1_cross_parallel.json'
+#             else:    
+#                 train_path = chat_path + '/data/translates/translate_mix_V1_new.json'
+#                 # eval_path = chat_path + '/data/eval_ins.json'
+#         elif 'V2' in version:
+#             train_path = chat_path + '/data/translates/translate_mix_V2.json'
+#             # eval_path = chat_path + '/data/eval_ins.json'
+#         elif 'V3' in version:
+#             if 'rft' in version:
+#                 if 'cross' in version.lower():
+#                     train_path = chat_path + '/data/translates/rft_mixV3_crosslang.json'
+#                 else:
+#                     train_path = chat_path + '/data/translates/rft_mixV3.json'
+#             else:
+#                 train_path = chat_path + '/data/translates/translate_mix_V3.json'
+#             # eval_path = chat_path + '/data/eval_ins.json'
+#         else:
+#             if 'rft' in version:
+#                 train_path = chat_path + '/data/translates/rft_mixall.json'
+#             else:
+#                 # train_path = chat_path + '/data/translates/translate_mix_V3.json'
+#                 train_path = chat_path + '/data/translates/translate_mix_all.json'
+#             # eval_path = chat_path + '/data/eval_ins.json'
+#         print(train_path)
+#         self.raw_datasets = load_dataset('json',
+#                                          data_files={
+#                                              "train":
+#                                              train_path
+#                                          })
+#         raw_datasets = self.raw_datasets['train'].shuffle(seed=1234)
+#         train_size = int(len(raw_datasets)*0.995)
+#         train_data = raw_datasets[:train_size]
+#         test_data = raw_datasets[train_size:]
+#         self.raw_datasets['train'] =  Dataset.from_dict(train_data)
+#         self.raw_datasets['eval'] =  Dataset.from_dict(test_data)
+
+#     def get_train_data(self):
+#         if self.raw_datasets['train'] is not None:
+#             return self.raw_datasets['train']
+#         return None
+#         # return self.train_data
+
+#     def get_eval_data(self):
+#         if self.raw_datasets['eval'] is not None:
+#             return self.raw_datasets['eval']
+#         return None
+#         # return self.test_data
+
+#     # The prompt should be in the format of: " Human: " + actual_prompt_sentence + " Assistant:"
+#     def get_prompt(self, sample):
+#         if sample['prompt'] is not None:
+#             return " " + sample['prompt']
+#         return None
+
+#     # The chosen response should be in the format of: " " + actual_response_sentence
+#     def get_chosen(self, sample):
+#         if sample['chosen'] is not None:
+#             return " " + sample['chosen']
+#         return None
+
+#     # The rejected response should be in the format of: " " + actual_response_sentence
+#     # If the dataset does not have rejected response, return None
+#     def get_rejected(self, sample):
+#         if sample['rejected'] is not None:
+#             return " " + sample['rejected']
+#         return None
+
+#     def get_prompt_and_chosen(self, sample):
+#         if sample['prompt'] is not None and sample['chosen'] is not None:
+#             return " " + sample['prompt'] + " " + sample['chosen']
+#         return None
+
+#     def get_prompt_and_rejected(self, sample):
+#         if sample['prompt'] is not None and sample['rejected'] is not None:
+#             return " " + sample['prompt'] + " " + sample['rejected']
+#         return None
+
+
+# loading mathoctopus
+class MathOctopusDataset(PromptRawDataset):
+
+    def __init__(self, output_path, seed, local_rank, dataset_name, train_path):
         super().__init__(output_path, seed, local_rank, dataset_name)
         self.dataset_name = "local/jsonfile"
         self.dataset_name_clean = "jsonfile"
-        if 'V1' in version:
-            if 'cross' in version.lower():
-                if 'regular' in version:
-                    train_path = chat_path + '/data/translates/translate_mixV1_crosslang_regular.json'
-                    # eval_path = chat_path + '/data/eval_ins.json'
-                else:
-                    train_path = chat_path + '/data/translates/translate_mixV1_crosslang.json'
-                    # eval_path = chat_path + '/data/eval_ins.json'      
-            elif 'regular' in version:
-                train_path = chat_path + '/data/translates/translate_mixV1_regular.json'
-                # eval_path = chat_path + '/data/eval_ins.json'
-            elif 'parallel' in version.lower():
-                train_path = chat_path + '/data/translates/translate_mixV1_cross_parallel.json'
-            else:    
-                train_path = chat_path + '/data/translates/translate_mix_V1_new.json'
-                # eval_path = chat_path + '/data/eval_ins.json'
-        elif 'V2' in version:
-            train_path = chat_path + '/data/translates/translate_mix_V2.json'
-            # eval_path = chat_path + '/data/eval_ins.json'
-        elif 'V3' in version:
-            if 'rft' in version:
-                if 'cross' in version.lower():
-                    train_path = chat_path + '/data/translates/rft_mixV3_crosslang.json'
-                else:
-                    train_path = chat_path + '/data/translates/rft_mixV3.json'
-            else:
-                train_path = chat_path + '/data/translates/translate_mix_V3.json'
-            # eval_path = chat_path + '/data/eval_ins.json'
-        else:
-            if 'rft' in version:
-                train_path = chat_path + '/data/translates/rft_mixall.json'
-            else:
-                # train_path = chat_path + '/data/translates/translate_mix_V3.json'
-                train_path = chat_path + '/data/translates/translate_mix_all.json'
-            # eval_path = chat_path + '/data/eval_ins.json'
-        print(train_path)
-        self.raw_datasets = load_dataset('json',
-                                         data_files={
-                                             "train":
-                                             train_path
-                                         })
+        # train_path = dataset_name
+        try:
+            self.raw_datasets = load_dataset(train_path)
+        except:
+            self.raw_datasets = load_dataset('json',
+                                            data_files={
+                                                "train":
+                                                train_path
+                                            })
         raw_datasets = self.raw_datasets['train'].shuffle(seed=1234)
         train_size = int(len(raw_datasets)*0.995)
         train_data = raw_datasets[:train_size]
@@ -492,64 +557,6 @@ class XLocalJsonFileDataset(PromptRawDataset):
         if sample['prompt'] is not None and sample['rejected'] is not None:
             return " " + sample['prompt'] + " " + sample['rejected']
         return None
-
-
-# for harry potter training
-class harryLocalJsonFileDataset(PromptRawDataset):
-
-    def __init__(self, output_path, seed, local_rank, dataset_name, chat_path):
-        super().__init__(output_path, seed, local_rank, dataset_name)
-        
-        
-        self.dataset_name = "local/jsonfile"
-        self.dataset_name_clean = "jsonfile"
-        self.raw_datasets = load_dataset('json',
-                                         data_files={
-                                             "train":
-                                             chat_path + '/data/harry/en/mix_train.json',
-                                             "eval":
-                                             chat_path + '/data/harry/en/dia_test.json'
-                                         })
-
-    def get_train_data(self):
-        if self.raw_datasets['train'] is not None:
-            return self.raw_datasets['train']
-        return None
-
-    def get_eval_data(self):
-        if self.raw_datasets['eval'] is not None:
-            return self.raw_datasets['eval']
-        return None
-
-    # The prompt should be in the format of: " Human: " + actual_prompt_sentence + " Assistant:"
-    def get_prompt(self, sample):
-        if sample['prompt'] is not None:
-            return " " + sample['prompt']
-        return None
-
-    # The chosen response should be in the format of: " " + actual_response_sentence
-    def get_chosen(self, sample):
-        if sample['chosen'] is not None:
-            return " " + sample['chosen']
-        return None
-
-    # The rejected response should be in the format of: " " + actual_response_sentence
-    # If the dataset does not have rejected response, return None
-    def get_rejected(self, sample):
-        if sample['rejected'] is not None:
-            return " " + sample['rejected']
-        return None
-
-    def get_prompt_and_chosen(self, sample):
-        if sample['prompt'] is not None and sample['chosen'] is not None:
-            return " " + sample['prompt'] + " " + sample['chosen']
-        return None
-
-    def get_prompt_and_rejected(self, sample):
-        if sample['prompt'] is not None and sample['rejected'] is not None:
-            return " " + sample['prompt'] + " " + sample['rejected']
-        return None
-
 
 
 
