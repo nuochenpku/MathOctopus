@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # local/xjsonfile/rftV2
 # DeepSpeed Team
-OUTPUT=/cpfs/user/chennuo/CN/output/test
+OUTPUT=$1
 ZERO_STAGE=$2
-MODEL_PATH=/cpfs/shared/nlp/llama2/llama-2-7b-hf
+MODEL_PATH=$3
 DATA_PATH=MathOctopus
 if [ "$OUTPUT" == "" ]; then
     OUTPUT=./OUTPUT
