@@ -28,6 +28,20 @@ This repo contains the code, data, and models for "[MathOctopus: Building Math G
 
 ### Datasets 
 
+#### **MGSM8KInstruct**
+
+| Training Dataset      | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
+|:----------------------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
+| MGSM8KInstruct        | 7473    | 7472    | 7466    | 6539    | 7466    | 7470    | 7469    | 7471    | 7361    | 7473    | **73.6K**   |
+
+
+#### **MSVAMP**
+
+| Test Dataset      | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
+|:----------------------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
+| MSVAMP                | 1000    | 1000    | 1000    | 1000    | 1000    | 1000    | 1000    | 1000    | 1000    | 1000    | **10K**   |
+
+#### Usage
 
 Our dataset and models are all available at Huggingface.
 🦑
@@ -36,18 +50,84 @@ Our dataset and models are all available at Huggingface.
 
 Or you can directly download them from
 
-#  Models
+##  Models
 |  Base Model: LLama   	| Parallel-Training                                         	| Cross-Training                                                       	|
 |-----	|---------------------------------------------------------------	|---------------------------------------------------------------------------	|
 | 7B-LLaMA 2  	| 🐙 [MathOctopus-Parallel-7B](https://huggingface.co/Mathoctopus/Parallel_7B)   	| 🐙 [MathOctopus-Cross-7B](https://huggingface.co/Mathoctopus/Cross_7B)  	|
 || 🐙[MathOctopus-Parallel-xRFT-7B](https://huggingface.co/TIGER-Lab/MathOctopus-7B)|🐙[MathOctopus-Cross-xRFT-7B](https://huggingface.co/TIGER-Lab/MathOctopus-7B)|
 | 13B-LLaMA 2 	| 🐙 [MathOctopus-Parallel-13B](https://huggingface.co/TIGER-Lab/MathOctopus-13B) 	| 🐙 [MathOctopus-Cross-13B](https://huggingface.co/TIGER-Lab/MathOctopus-Coder-13B) 	|
 | 33B-LLaMA 1 	| 🐙 [MathOctopus-Parallel-33B](https://huggingface.co/TIGER-Lab/MathOctopus-13B)                                                             	| 🐙 [MathOctopus-Cross-33B](https://huggingface.co/TIGER-Lab/MathOctopus-Coder-34B) 	|
-| 70B-LLaMA 2 	| Coming soon!	| Coming Soon!                                                                         	|
+| 70B-LLaMA 2 	| Coming soon!	| Coming Soon!      |
 
-## **News**
 
-[Oct. 10] We update our decoding method to hybrid decoding: first try PoT to generate a program, if it is not excutable, we will regenerate a CoT solution as the final answer. This hybrid decoding method improves the peformance significantly. Check our updated paper Appendix for more details. 
+### **Overall Results on MGSM8KInstruct**
+
+| 7B Model                        | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
+|:--------------------------------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
+| MathOctupos<sup>C</sup>         | 52.0    | 23.6    | 31.6    | 18.8    | 38.0    | 39.2    | 36.4    | 27.2    | 33.6    | 21.6    | 32.2    |
+| **xRFT**-MathOctupos<sup>C</sup>| 51.2    | 24.0    | 33.2    | 18.8    | 36.0    | 41.2    | 37.6    | 29.6    | 36.4    | 25.2    | 33.3    |
+| MathOctupos<sup>P</sup>-LoRA    | 30.4    | 15.2    | 23.6    | 10.4    | 22.8    | 24.8    | 26.4    | 18.0    | 22.0    | 14.8    | 20.8    |
+| MathOctupos<sup>P</sup>         | 52.4    | 39.2    | 38.4    | 28.8    | 44.8    | 42.4    | 43.6    | 36.0    | 39.6    | 34.4    | 40.0    |
+| **xRFT**-MathOctupos<sup>P</sup>| 54.8    | 38.4    | 45.2    | 33.2    | 43.6    | 45.2    | 38.0    | 35.6    | 48.4    | 36.4    | 41.9    |
+<p></p >
+
+| 13B Model                       | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
+|:--------------------------------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
+| MathOctupos<sup>C</sup>         | 56.4    | 27.2    | 39.2    | 24.0    | 47.6    | 49.6    | 47.6    | 40.4    | 42.0    | 24.8    | 39.9    |
+| **xRFT**-MathOctupos<sup>C</sup>| 53.6    | 28.0    | 45.2    | 21.2    | 48.0    | 46.4    | 46.0    | 35.2    | 45.6    | 28.8    | 39.8    |
+| MathOctupos<sup>P</sup>         | 53.2    | 42.8    | 48.8    | 35.2    | 44.4    | 48.0    | 48.4    | 43.2    | 47.6    | 46.8    | 45.8    |
+| **xRFT**-MathOctupos<sup>P</sup>| 51.6    | 46.0    | 51.2    | 42.0    | 49.2    | 53.2    | 49.6    | 39.6    | 47.6    | 46.0    | 47.6    |
+<p></p >
+
+| 30-34B Model                    | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
+|:--------------------------------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
+| MathOctupos<sup>C</sup>         | 55.6    | 24.4    | 36.0    | 19.2    | 40.4    | 51.2    | 44.4    | 27.2    | 37.2    | 21.6    | 35.7    |
+| **xRFT**-MathOctupos<sup>C</sup>| 53.6    | 27.6    | 34.4    | 19.2    | 47.2    | 47.6    | 44.8    | 30.8    | 38.8    | 22.8    | 36.7    |
+| MathOctupos<sup>P</sup>         | 56.4    | 46.8    | 52.0    | 35.2    | 47.2    | 53.2    | 48.0    | 39.2    | 45.6    | 41.2    | 46.5    |
+| **xRFT**-MathOctupos<sup>P</sup>| 51.6    | 47.2    | 52.4    | 37.6    | 51.2    | 52.8    | 44.4    | 41.6    | 50.0    | 47.6    | 47.6    |
+
+
+### **Overall Results on MSVAMP**
+
+| 7B Model                        | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
+|:--------------------------------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
+| MathOctupos<sup>C</sup>         | 49.2    | 36.6    | 43.6    | 30.2    | 48.6    | 46.8    | 46.4    | 42.5    | 46.7    | 34.0    | 42.5    |
+| **xRFT**-MathOctupos<sup>C</sup>| 49.9    | 37.7    | 43.3    | 32.9    | 46.5    | 47.6    | 47.3    | 42.7    | 46.6    | 36.2    | 43.1    |
+| MathOctupos<sup>P</sup>-LoRA    | 30.4    | 15.2    | 23.6    | 10.4    | 22.8    | 24.8    | 26.4    | 18.0    | 22.0    | 14.8    | 20.8    |
+| MathOctupos<sup>P</sup>         | 46.5    | 40.1    | 42.5    | 29.1    | 43.5    | 45.4    | 46.0    | 42.5    | 45.4    | 35.7    | 41.7    |
+| **xRFT**-MathOctupos<sup>P</sup>| 46.8    | 42.3    | 43.2    | 32.8    | 43.1    | 44.5    | 45.3    | 43.2    | 42.1    | 40.5    | 42.4    |
+<p></p >
+
+| 13B Model                       | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
+|:--------------------------------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
+| MathOctupos<sup>C</sup>         | 56.6    | 40.4    | 49.0    | 30.3    | 50.9    | 54.2    | 54.7    | 46.3    | 52.4    | 35.7    | 47.1    |
+| **xRFT**-MathOctupos<sup>C</sup>| 52.9    | 41.9    | 49.2    | 34.1    | 50.5    | 52.8    | 51.5    | 45.8    | 50.2    | 35.7    | 46.5    |
+| MathOctupos<sup>P</sup>         | 50.7    | 43.4    | 42.6    | 31.8    | 48.4    | 49.4    | 50.6    | 41.1    | 46.9    | 39.3    | 44.4    |
+| **xRFT**-MathOctupos<sup>P</sup>| 44.6    | 43.4    | 46.4    | 34.2    | 47.7    | 48.2    | 49.9    | 43.1    | 48.2    | 39.5    | 44.5    |
+<p></p >
+
+| 30-34B Model                    | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
+|:--------------------------------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
+| MathOctupos<sup>C</sup>         | 51.5    | 42.1    | 46.2    | 23.2    | 50.5    | 52.1    | 52.9    | 42.2    | 50.5    | 33.4    | 44.5    |
+| **xRFT**-MathOctupos<sup>C</sup>| 48.1    | 42.8    | 43.6    | 23.3    | 48.7    | 50.0    | 48.9    | 43.4    | 44.6    | 35.5    | 42.9    |
+| MathOctupos<sup>P</sup>         | 56.4    | 46.8    | 52.0    | 35.2    | 47.2    | 53.2    | 48.0    | 39.2    | 45.6    | 41.2    | 46.5    |
+| **xRFT**-MathOctupos<sup>P</sup>| 48.0    | 42.3    | 46.1    | 36.2    | 47.5    | 48.5    | 48.3    | 45.8    | 47.2    | 41.2    | 45.1    |
+
+
+### **MathOctupos in English**
+
+| Models                          | GSM8K   | SVAMP   |
+|:--------------------------------|:--------|:--------|
+| LLaMA 2-7B                      | 42.4    | 38.3    |
+| MathOctupos<sup>P</sup>-7B      | 49.3    | 46.8    |
+| MathOctupos<sup>C</sup>-7B      | 50.8    | 49.3    |
+| LLaMA 2-13B                     | 51.0    | 50.9    |
+| MathOctupos<sup>P</sup>-13B     | 55.5    | 52.1    |
+| MathOctupos<sup>C</sup>-13B     | 56.6    | 56.6    |
+| LLaMA 1-33B                     | 50.0    | 49.0    |
+| MathOctupos<sup>P</sup>-33B     | 56.0    | 52.5    |
+| MathOctupos<sup>C</sup>-33B     | 53.7    | 51.5    |
+
 
 ## **Table of Contents**
 
