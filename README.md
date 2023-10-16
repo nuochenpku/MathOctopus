@@ -21,7 +21,7 @@ This repo contains the code, data, and models for "[Breaking Language Barriers i
 
 <br>
 <div align="center">
-  <img src="MathOctopus_github.png" width="80%" title="Introduction Figure">
+  <img src="model.png" width="80%" title="Introduction Figure">
 </div>
 
 ## Official Website
