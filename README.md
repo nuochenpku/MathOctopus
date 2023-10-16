@@ -144,13 +144,14 @@ We evaluate our models in two datasets: MGSM and MSVAMP
 - [📖 Citation](#citation)
 
 ## **Introduction**
-We introduce MathOctopus 🐙, a series of open-source large language models (LLMs) specifically tailored for general math problem-solving. The MathOctopus models are trained on MathInstruct, a meticulously curated instruction tuning dataset that is lightweight yet generalizable. MathInstruct is compiled from 13 math rationale datasets, six of which are newly curated by this work. It uniquely focuses on the hybrid use of chain-of-thought (CoT) and program-of-thought (PoT) rationales, and ensures extensive coverage of diverse mathematical fields. 
+We introduce 🐙 MathOctopus, a series of open-source large language models (LLMs) specifically tailored for multilingual math problem-solving. The MathOctopus models are trained on 🤗 MGSM8KInstruct Dataset, encompassing ten distinct languages. MathOctopus notably outperforms conventional open-source LLMs and exhibits superiority over ChatGPT in few-shot scenarios.
+
 ## **Installation**
 
 Clone this repository and install the required packages:
 
 ```bash
-git clone https://github.com/TIGER-AI-Lab/MathOctopus.git
+git clone https://github.com/nuochenpku/MathOctopus.git
 cd MathOctopus
 pip install -r requirements.txt
 ```
@@ -159,12 +160,12 @@ pip install -r requirements.txt
 
 ### **Data Loading**
 
-Run the following command to preprocess the data:
+Run the following command to preprocess the data from our Instruct in the Parallel-training setting:
 
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("TIGER-Lab/MathInstruct")
+dataset = load_dataset("https://huggingface.co/datasets/Mathoctopus/GSM8KInstruct_Parallel")
 ```
 
 ### **Quick Start**
