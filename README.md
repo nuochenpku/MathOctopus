@@ -1,7 +1,7 @@
 
 # Overview
 
-This repository contains resources for accessing the official benchmarks, codes and checkpoints of the paper: "[Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations](https://arxiv.org/pdf/2309.05653.pdf)".
+This repository contains resources for accessing the official benchmarks, codes and checkpoints of the paper: "[Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations]".
 
 
 This work pioneers exploring and building powerful  Multilingual Math Reasoning (xMR) LLMs. To accomplish  this, we make the following works:
@@ -13,7 +13,7 @@ This work pioneers exploring and building powerful  Multilingual Math Reasoning 
 
 
 # 🐙🐙**MathOctopus** 🐙🐙
-This repo contains the code, data, and models for "[Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations](https://arxiv.org/pdf/2309.05653.pdf)"
+This repo contains the code, data, and models for "[Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations]"
 
 <div align="center">
  🔥 🔥 🔥 Check out our <a href = "https://tiger-ai-lab.github.io/MathOctopus/">[Project Page]</a> for more results and analysis!
