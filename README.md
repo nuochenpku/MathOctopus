@@ -16,7 +16,7 @@ This work pioneers exploring and building powerful  Multilingual Math Reasoning 
 This repo contains the code, data, and models for "[Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations]"
 
 <div align="center">
- 🔥 🔥 🔥 Check out our <a href = "https://tiger-ai-lab.github.io/MathOctopus/">[Project Page]</a> for more results and analysis!
+ 🔥 🔥 🔥 Check out our <a href = "https://mathoctopus.github.io/">[Project Page]</a> for more results and analysis!
 </div>
 
 <br>
