@@ -1,14 +1,14 @@
 
 # Overview
 
-This repository contains resources for accessing the official benchmarks, codes and checkpoints of the paper: "[Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations]".
+This repository contains resources for accessing the official benchmarks, codes, and checkpoints of the paper: "[Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations]".
 
 
-This work pioneers exploring and building powerful  Multilingual Math Reasoning (xMR) LLMs. To accomplish  this, we make the following works:
+This work pioneers exploring and building powerful  Multilingual Math Reasoning (xMR) LLMs. To accomplish this, we make the following works:
 
 - **MGSM8KInstruct**,  the first multilingual math reasoning instruction dataset,  encompassing ten distinct languages, thus addressing the issue of training data scarcity in xMR tasks.
 - **MSVAMP**, an out-of-domain xMR test dataset, to conduct a more exhaustive and comprehensive evaluation of the model’s multilingual mathematical capabilities.
-- **MathOctopus**, our  effective Multilingual Math Reasoning  LLMs,  training with  different strategies, which notably outperform conventional open-source LLMs and exhibit superiority over ChatGPT in few-shot scenarios.
+- **MathOctopus**, our effective Multilingual Math Reasoning  LLMs,  training with  different strategies, which notably outperform conventional open-source LLMs and exhibit superiority over ChatGPT in few-shot scenarios.
 
 
 
@@ -45,7 +45,7 @@ This repo contains the code, data, and models for "[Breaking Language Barriers i
 
 Our dataset and models are all available at Huggingface.
 🦑
-🤗 [MathInstruct Dataset](https://huggingface.co/datasets/TIGER-Lab/MathInstruct)
+🤗 [MGSM8KInstruct Dataset](https://huggingface.co/datasets/Mathoctopus/GSM8KInstruct_Parallel)
 
 
 Or you can directly download them from
