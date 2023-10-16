@@ -165,172 +165,120 @@ dataset = load_dataset("TIGER-Lab/MathInstruct")
 To play with our model, run:
 
 ```python
+# Use a pipeline as a high-level helper
 from transformers import pipeline
-pipeline = pipeline("text-generation", "TIGER-Lab/MathOctopus-Coder-7B")
 
-alpaca_template = "Below is an instruction that describes a task. Write a response that appropriately completes the request.\n### Instruction:\n{query}\n\n### Response:"
+pipe = pipeline("text-generation", model="Mathoctopus/Parallel_7B")
+
+alpaca_template = "Below is an instruction that describes a task. Write a response that appropriately completes the request in {lang}. Please answer in {lang}. \n### Instruction:\n{query}\n\n### Response:"
 
 query = "Janet's ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder at the farmers' market daily for $2 per fresh duck egg. How much in dollars does she make every day at the farmers' market?"
 
-### By default, MathOctopus will output the Chain-of-thought (CoT) rationale
-rationale_prefix = ""
 
-### You can let MathOctopus output Program-of-thought (PoT) rationale by simply adding
-rationale_prefix = " Let's write a program."
 
-input = alpaca_template.format(query = query + rationale_prefix)
+### You can let MathOctopus output in a specific language.
+language = English
+
+input = alpaca_template.format(lang= language, query = query)
 
 output = pipeline(input)[0]['generated_text']
 print(output)
 ```
 
-### **Large-scale Evaluation**
+### **Evaluation**
 
-To replicate the experimental results in our paper, run:
-
-```bash
-### For open-eneded questions, the dataset should be one of 
-### ['gsm8k', 'svamp', 'math', 'numglue', 'deepmind', 'simuleq'] 
-### We first try PoT and if the generated program is not executable, we shift to CoT
-
-dataset='math'
-
-python run_open.py \
-  --model "TIGER-Lab/MathOctopus-Coder-7B" \
-  --shots 0 \
-  --stem_flan_type "pot_prompt" \
-  --batch_size 8 \
-  --dataset $dataset \
-  --model_max_length 1500 \
-  --cot_backup \
-  --print
-```
+To replicate the experimental results of MGSM in our paper, run:
 
 ```bash
-### For mutilple-choice questions, the dataset should be one of 
-### ['aqua', 'sat', 'mmlu_mathematics'].
-### We first try PoT and if the generated program is not executable, we shift to CoT
-dataset='aqua'
-
-python run_choice.py \
-  --model "TIGER-Lab/MathOctopus-Coder-7B" \
-  --shots 0 \
-  --stem_flan_type "pot_prompt" \
-  --match_answer "self"
-  --stem_flan_type "" \
-  --batch_size 8 \
-  --dataset $dataset \
-  --cot_backup \
-  --print
+CUDA_VISIBLE_DEVICES=1 python3  generate_and_eval.py --model_path $MODEL_PATH \
+    --streategy Parallel \
+    --batch_size 32 \
+&> $MODEL_PATH/mgsm_Parallel_testbf16.log 
 ```
+
+To replicate the experimental results of MSVAMP in our paper, run:
+
+```bash
+
+CUDA_VISIBLE_DEVICES=1 python3  svamp_test.py --model_path $MODEL_PATH \
+    --streategy Parallel \
+    --batch_size 32 \
+&> $MODEL_PATH/svamp_parallel_testbf16.log &
+```
+--strategy should be ***Parallel*** or ***Cross***. If you want to test in a specific language, you can add --lang_only $lang.
+
+
+#### **Large-scale Evaluation**
+
+If you have four GPUs, you can get test models with parallel/cross strategy in two datasets via:
+
+```bash
+
+bash test_xmath.sh
+```
+
+
+
 
 ### **Fine-tuning**
 
 To train the 7B/13B model, run:
 
 ```bash
-torchrun --nproc_per_node [$WORKER_GPU] \
- --master_addr [$WORKER_0_HOST] \
- --node_rank [$ROLE_INDEX] \
- --master_port [$WORKER_0_PORT] \
- --nnodes [$WORKER_NUM] \
-train.py \
-    --model_name_or_path "codellama/CodeLlama-7b-hf" \
-    --data_path "TIGER-Lab/MathInstruct" \
-    --bf16 True \
-    --output_dir checkpoints/MathOctopus-Coder-7B \
-    --num_train_epochs 3 \
-    --per_device_train_batch_size 2 \
-    --per_device_eval_batch_size 1 \
-    --gradient_accumulation_steps 8 \
-    --evaluation_strategy "no" \
-    --save_strategy "steps" \
-    --save_steps 2000\
-    --save_total_limit 1 \
-    --learning_rate 2e-5 \
-    --weight_decay 0. \
-    --warmup_ratio 0.03 \
-    --lr_scheduler_type "cosine" \
-    --logging_steps 1 \
-    --fsdp "full_shard auto_wrap" \
-    --fsdp_transformer_layer_cls_to_wrap 'LlamaDecoderLayer' \
-    --tf32 True
+cd step1_supervised_finetuning
+bash training_scripts/single_node/run_llama2.sh
+```
+
+which consists of the following commands:
+
+
+```bash
+
+#!/bin/bash
+# Copyright (c) Microsoft Corporation.
+# SPDX-License-Identifier: Apache-2.0
+# local/xjsonfile/rftV2
+# DeepSpeed Team
+OUTPUT=$1
+ZERO_STAGE=$2
+MODEL_PATH=$3
+DATA_PATH=MathOctopus
+if [ "$OUTPUT" == "" ]; then
+    OUTPUT=./OUTPUT
+fi
+if [ "$ZERO_STAGE" == "" ]; then
+    ZERO_STAGE=3
+fi
+mkdir -p $OUTPUT
+
+deepspeed --include localhost:0,1,2,3 --master_port=29500 main.py  \
+   --data_path $DATA_PATH \
+   --data_split 10,0,0 \
+   --model_name_or_path $MODEL_PATH \
+   --per_device_train_batch_size 8 \
+   --per_device_eval_batch_size 8 \
+   --max_seq_len 512 \
+   --learning_rate 2e-5  \
+   --weight_decay 0. \
+   --num_train_epochs 3  \
+   --gradient_accumulation_steps 4 \
+   --lr_scheduler_type cosine \
+   --num_warmup_steps 0 \
+   --seed 1234 \
+   --gradient_checkpointing \
+   --zero_stage $ZERO_STAGE \
+   --deepspeed \
+   --output_dir $OUTPUT \
+   &> $OUTPUT/training.log
 ```
 
 To train the 34B/70B model, run:
 ```bash
-torchrun --nproc_per_node [$WORKER_GPU] \
- --master_addr [$WORKER_0_HOST] \
- --node_rank [$ROLE_INDEX] \
- --master_port [$WORKER_0_PORT] \
- --nnodes [$WORKER_NUM] \
-train.py \
-    --model_name_or_path "codellama/CodeLlama-34b-hf" \
-    --data_path "TIGER-Lab/MathInstruct" \
-    --bf16 True \
-    --output_dir checkpoints/MathOctopus-Coder-34B \
-    --num_train_epochs 3 \
-    --per_device_train_batch_size 1 \
-    --per_device_eval_batch_size 1 \
-    --gradient_accumulation_steps 2 \
-    --evaluation_strategy "no" \
-    --save_strategy "epoch" \
-    --save_total_limit 1 \
-    --learning_rate 1e-5 \
-    --weight_decay 0. \
-    --warmup_ratio 0.03 \
-    --lr_scheduler_type "cosine" \
-    --logging_steps 1 \
-    --deepspeed "ds_config/ds_config_zero3.json" \
-    --tf32 True
-```
-
-## Prompt Format
-
-If you want to do CoT:
-```
-Below is an instruction that describes a task. Write a response that appropriately completes the request.
-
-### Instruction:
-{instruction}
-
-### Response:
-```
-
-If you want to do PoT:
-```
-Below is an instruction that describes a task. Write a response that appropriately completes the request.
-
-### Instruction:
-{instruction} Let's write a program.
-
-### Response:
-```
-
-## WebUI
-We use [llama2-webui](https://github.com/liltom-eth/llama2-webui) as our ui bankend. To use webui for MathOctopus run:
-```
-pip install gradio
-cd webui/llama2-webui
-python3 MathOctopus.py --model_path your_model_path --backend_type transformers 
+cd step1_supervised_finetuning
+bash training_scripts/single_node/run_llama_30b.sh
 ```
 
 
-
-## **License**
-Please check out the license of each subset in our curated dataset MathInstruct.
-| Dataset Name 	| License Type   	|
-|--------------	|----------------	|
-| GSM8K        	| MIT            	|
-| GSM8K-RFT    	| Non listed      |
-| AQuA-RAT     	| Apache 2.0     	|
-| MATH         	| MIT            	|
-| TheoremQA    	| MIT            	|
-| Camel-Math   	| Attribution-NonCommercial 4.0 International    	|
-| NumGLUE      	| Apache-2.0          	|
-| CrowdSourced (Lila)	| Attribution 4.0 International     	|
-| MathQA       	| Apache-2.0     	|
-| Our Curated   | MIT             |
 
 
 ## **Citation**
@@ -338,12 +286,7 @@ Please check out the license of each subset in our curated dataset MathInstruct.
 Please cite our paper if you use our data, model or code. Please also kindly cite the original dataset papers. 
 
 ```
-@article{yue2023MathOctopus,
-  title={MathOctopus: Building Math Generalist Models through Hybrid Instruction Tuning},
-  author={Xiang Yue, Xingwei Qu, Ge Zhang, Yao Fu, Wenhao Huang, Huan Sun, Yu Su, Wenhu Chen},
-  journal={arXiv preprint arXiv:2309.05653},
-  year={2023}
-}
+
 ```
 
 
