@@ -59,8 +59,8 @@ Or you can directly download them from
 | 33B-LLaMA 1 	| 🐙 [MathOctopus-Parallel-33B](https://huggingface.co/TIGER-Lab/MathOctopus-13B)                                                             	| 🐙 [MathOctopus-Cross-33B](https://huggingface.co/TIGER-Lab/MathOctopus-Coder-34B) 	|
 | 70B-LLaMA 2 	| Coming soon!	| Coming Soon!      |
 
-
-### **Overall Results on MGSM8KInstruct**
+We evaluate our models in two datasets: MGSM and MSVAMP
+### **Overall Results on MGSM**
 
 | 7B Model                        | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
 |:--------------------------------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|:--------|
