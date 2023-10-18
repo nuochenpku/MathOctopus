@@ -48,7 +48,7 @@ Our dataset and models are all available at Huggingface.
 🤗 [MGSM8KInstruct Dataset](https://huggingface.co/datasets/Mathoctopus/GSM8KInstruct_Parallel)
 
 
-Or you can directly download them from
+Or you can directly download them in our data forler.
 
 ##  Models
 |  Base Model: LLama   	| Parallel-Training                                         	| Cross-Training                                                       	|
