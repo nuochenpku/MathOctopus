@@ -48,6 +48,8 @@ Our dataset and models are all available at Huggingface.
 🦑
 🤗 [MGSM8KInstruct_Parallel Dataset](https://huggingface.co/datasets/Mathoctopus/GSM8KInstruct_Parallel)
 
+🤗 [MSVAMP Dataset](https://huggingface.co/datasets/Mathoctopus/MSVAMP)
+
 
 Or you can directly download them in our data folder.
 
