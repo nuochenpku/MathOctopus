@@ -44,19 +44,21 @@ This repo contains the code, data, and models for "[Breaking Language Barriers i
 #### Usage
 
 Our dataset and models are all available at Huggingface.
+
 🦑
-🤗 [MGSM8KInstruct Dataset](https://huggingface.co/datasets/Mathoctopus/GSM8KInstruct_Parallel)
+🤗 [MGSM8KInstruct_Parallel Dataset](https://huggingface.co/datasets/Mathoctopus/GSM8KInstruct_Parallel)
 
 
-Or you can directly download them in our data forler.
+Or you can directly download them in our data folder.
 
 ##  Models
 |  Base Model: LLama   	| Parallel-Training                                         	| Cross-Training                                                       	|
 |-----	|---------------------------------------------------------------	|---------------------------------------------------------------------------	|
 | 7B-LLaMA 2  	| 🐙 [MathOctopus-Parallel-7B](https://huggingface.co/Mathoctopus/Parallel_7B)   	| 🐙 [MathOctopus-Cross-7B](https://huggingface.co/Mathoctopus/Cross_7B)  	|
 || 🐙[MathOctopus-Parallel-xRFT-7B](https://huggingface.co/Mathoctopus/Parallel_xRFT_7B)|🐙[MathOctopus-Cross-xRFT-7B](https://huggingface.co/Mathoctopus/Cross_xRFT_7B)|
-| 13B-LLaMA 2 	| 🐙 [MathOctopus-Parallel-13B](https://huggingface.co/TIGER-Lab/MathOctopus-13B) 	| 🐙 [MathOctopus-Cross-13B](https://huggingface.co/TIGER-Lab/MathOctopus-Coder-13B) 	|
-| 33B-LLaMA 1 	| 🐙 [MathOctopus-Parallel-33B](https://huggingface.co/TIGER-Lab/MathOctopus-13B)                                                             	| 🐙 [MathOctopus-Cross-33B](https://huggingface.co/TIGER-Lab/MathOctopus-Coder-34B) 	|
+| 13B-LLaMA 2 	| 🐙 [MathOctopus-Parallel-13B] 	| 🐙 [MathOctopus-Cross-13B]	|
+|| 🐙[MathOctopus-Parallel-xRFT-13B](https://huggingface.co/Mathoctopus/Parallel_xRFT_13B)|🐙[MathOctopus-Cross-xRFT-13B](https://huggingface.co/Mathoctopus/Cross_xRFT_7B)|
+| 33B-LLaMA 1 	| 🐙 [MathOctopus-Parallel-33B]                                                           	| 🐙 [MathOctopus-Cross-33B] 	|
 | 70B-LLaMA 2 	| Coming soon!	| Coming Soon!      |
 
 *-Parallel refers to our model trained with the parallel-training strategy. 
