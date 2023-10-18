@@ -249,7 +249,7 @@ which consists of the following commands:
 OUTPUT=$1
 ZERO_STAGE=$2
 MODEL_PATH=$3
-DATA_PATH=MathOctopus
+DATA_PATH=$4
 if [ "$OUTPUT" == "" ]; then
     OUTPUT=./OUTPUT
 fi
