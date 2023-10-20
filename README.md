@@ -21,7 +21,7 @@ This repo contains the code, data, and models for "[Breaking Language Barriers i
 
 <br>
 <div align="center">
-  <img src="model.png" width="80%" title="Introduction Figure">
+  <img src="new_model.png" width="90%" title="Introduction Figure">
 </div>
 
 ## Official Website
