@@ -26,7 +26,7 @@ This repo contains the code, data, and models for "[Breaking Language Barriers i
 
 ## Official Website
 
-### Datasets 
+### 🤗Datasets 
 
 #### **MGSM8KInstruct**
 
@@ -45,15 +45,18 @@ This repo contains the code, data, and models for "[Breaking Language Barriers i
 
 Our dataset and models are all available at Huggingface.
 
-🦑
+🦑🦑🦑🦑
+
 🤗 [MGSM8KInstruct_Parallel Dataset](https://huggingface.co/datasets/Mathoctopus/GSM8KInstruct_Parallel)
+
+🤗 [MGSM8KInstruct_Cross Dataset](https://huggingface.co/datasets/Mathoctopus/MGSM8KInstruct_Cross)
 
 🤗 [MSVAMP Dataset](https://huggingface.co/datasets/Mathoctopus/MSVAMP)
 
 
 Or you can directly download them in our data folder.
 
-##  Models
+##  🤗Models
 |  Base Model: LLama   	| Parallel-Training                                         	| Cross-Training                                                       	|
 |-----	|---------------------------------------------------------------	|---------------------------------------------------------------------------	|
 | 7B-LLaMA 2  	| 🐙 [MathOctopus-Parallel-7B](https://huggingface.co/Mathoctopus/Parallel_7B)   	| 🐙 [MathOctopus-Cross-7B](https://huggingface.co/Mathoctopus/Cross_7B)  	|
