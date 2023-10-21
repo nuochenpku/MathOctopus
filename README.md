@@ -28,6 +28,19 @@ This repo contains the code, data, and models for "[Breaking Language Barriers i
 
 ### 🤗Datasets 
 
+Our collected MGSM8KInstruct training dataset and MSVAMP testset both contain 10 languages:
+
+- Spanish
+- French
+- German
+- Russian
+- Chinese
+- Japanese
+- Thai
+- Swahili
+- Bengali
+- Telugu
+
 #### **MGSM8KInstruct**
 
 | Training Dataset      | En      | Sw      | Zh      | Bn      | De      | Es      | Fr      | Ja      | Ru      | Th      | Overall |
