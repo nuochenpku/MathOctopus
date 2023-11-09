@@ -1,6 +1,9 @@
 
 # Overview
 
+
+The official benchmarks, codes, and checkpoints of the paper: **Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations** have been migrated to the new project: https://github.com/microsoft/MathOctopus.
+<!--
 This repository contains resources for accessing the official benchmarks, codes, and checkpoints of the paper: "[Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations]".
 
 
@@ -315,5 +318,5 @@ Please cite our paper if you use our data, model or code. Please also kindly cit
 ```
 
 ```
-
+-->
 
